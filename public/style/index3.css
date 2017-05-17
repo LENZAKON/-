@@ -1,0 +1,226 @@
+body{
+    height: 800px;
+    overflow-y: auto;
+
+}
+
+.dialog{
+    width: 800px;
+    height: 516px;
+    background-color: #f3f3f3;
+    position: fixed;
+    margin-left: 290px;
+    margin-top: 55px;
+}
+
+.dialog-header{
+    width: 800px;
+    height: 50px;
+    background-color: #d2d2d2;
+}
+
+.dialog-header p{
+    margin-left: 10px;
+    display: inline-block;
+
+}
+
+.dialog-header a{
+    text-decoration: none;
+    color: black;
+    margin-left: 670px;
+    font-size: 25px;
+}
+
+.dialog-body{
+    height: 370px;
+    width: 800px;
+}
+
+.dialog-b-input{
+    height: 300px;
+    width: 700px;
+    margin: 40px 0 0 40px;
+}
+
+.dialog-wenzi{
+    height: 220px;
+    width: 660px;
+    border: 1px solid #d2d2d2;
+    padding: 20px;
+    outline: none;
+}
+
+.dialog-express{
+    border-left: 1px solid #d2d2d2;
+    border-right: 1px solid #d2d2d2;
+    border-bottom: 1px solid #d2d2d2;
+    width: 700px;
+    height: 40px;
+}
+
+.dialog-express a{
+    text-decoration: none;
+}
+
+.dialog-express a>i{
+    display: inline-block;
+    height: 2em;
+    background: url("../img/expression.png") no-repeat 10px 5px;
+}
+.dialog-express a i:hover{
+    background-position: 10px -25px;
+}
+
+.dialog-express span{
+    display: inline-block;
+    color: #afafaf;
+    margin-left: 32rem;
+    line-height: 2.2rem;
+}
+
+.dialog-footer{
+    width: 800px;
+    height: 55px;
+    background-color: #d9d9d9;
+}
+
+.btn{
+    margin-left: 280px;
+    padding-top: 13px;
+}
+
+.key-word{
+    width: 778px;
+    height: 40px;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+}
+
+.key-word-con{
+    display: inline-block;
+    line-height: 40px;
+    margin-left: 40px;
+}
+
+.key-word-ed{
+    position: relative;
+    top: 12px;
+    display: inline-block;
+    float: right;
+}
+
+
+
+.change-word{
+    cursor: pointer;
+    display: inline-block;
+    background: url("../img/base_z34c9fa.png") 0 -3130px no-repeat;
+    width: 30px;
+    height: 18px;
+}
+.change-word:hover{
+    background-position: 0 -3147px;
+}
+
+.del-word{
+    cursor: pointer;
+    display: inline-block;
+    background: url("../img/base_z34c9fa.png") 0 -3166px no-repeat;
+    width: 30px;
+    height: 18px;
+}
+.del-word:hover{
+    background-position: 0 -3184px;
+}
+
+.match-a{
+    text-decoration: none;
+    color: rgba(0, 0, 255, 0.61);
+    cursor: pointer;
+    position: relative;
+    top: -6px;
+    margin-left: 50px;
+    margin-right: 25px;
+}
+
+.save-wenzi{
+    width: 110px;
+    height: 30px;
+    background-color: #00a800;
+    border: 0;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    outline: 0;
+}
+.save-wenzi:hover{
+    background-color: #009000;
+}
+
+.ans-type nav a{
+    color: #576477;
+}
+
+.key-total-word{
+    display: inline-block;
+    width: 500px;
+    height: 50px;
+    margin-left: 50px;
+}
+
+.add-rule{
+    box-shadow: 3px 3px 2px #576477;
+    margin-left: 30px;
+    margin-top: 20px;
+    background-color: #00a800;
+    display: inline-block;
+    width: 120px;
+    height: 40px;
+    font-size: 17px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.add-rule:hover{
+    background-color: #009000;
+}
+
+
+.add-rule span{
+    margin-top: 8px;
+    display: inline-block;
+    margin-left: 12px;
+}
+
+.key-span{
+    margin-right: 10px;
+}
+
+.insert{
+    width: 778px;
+    height: 90px;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+}
+
+.img-insert{
+    padding: 13px 15px 5px 40px;
+}
+
+.img-insert-pic{
+    height: 70px;
+}
+
+.img-insert-pic-a{
+    float: right;
+    position: relative;
+    top: 50px;
+    text-decoration: none;
+    color: rgba(0, 0, 255, 0.61)
+}
+.img-insert-pic-a:active{
+    color: rgba(0, 0, 255, 0.61)
+}

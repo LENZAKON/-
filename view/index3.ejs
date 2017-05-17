@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>菜单栏</title>
+    <link href="/style/menu.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="menbang img-menbang" style="display: none">
+    <div class="window">
+        <div class="window-top">
+            <p>选择图片</p>
+            <a href="#" class="close-menbang">×</a>
+        </div>
+        <div class="window-left">
+            <div class="w-l-list">
+                <div class="list">
+                    <p>全部图片</p>
+                    <em>(<span>0</span>)</em>
+                </div>
+                <div class="list">
+                    <p>未分组</p>
+                    <em>(<span>0</span>)</em>
+                </div>
+                <div class="list">
+                    <p>文章配图</p>
+                    <em>(<span>0</span>)</em>
+                </div>
+            </div>
+        </div>
+        <div class="window-right">
+            <img id="pic1" alt="" name="pic" style="margin-left: 0px; margin-top:35px; width: 0px" />
+            <!--添加模板数据-->
+            <img src="http://img05.tooopen.com/images/20150830/tooopen_sy_140703593676.jpg" class="window-right-img">
+            <img src="http://file03.16sucai.com/2015/09/2015m4otokzkzc5.jpg" class="window-right-img">
+        </div>
+        <div class="window-bot">
+            <div class="w-b-result">
+                <p class="tit-res">
+                    已选<span class="has-cho-num">0</span>个，可选1个
+                </p>
+                <div class="caozuo">
+                    <button class="res-que">确定</button>
+                    <button class="res-can img-res-can">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<header>
+    <nav>
+        <a class="type" href="index2.ejs">被添加自动回复</a>
+        <a class="type" href="index">关键词自动回复</a>
+        <a class="type select" href="javascript:void (0)">自定义菜单</a>
+    </nav>
+</header>
+<section class="add">
+    <div class="add-menu">
+        <span>+添加菜单</span>
+    </div>
+    <div class="upload-img">
+        <span>上传图片到素材库</span>
+        <div class="row">
+            <input type="file" name="fileToUpload" id="tuwenFileToUpload" onchange="fileSelected();"/>
+            <input type="button" onclick="uploadFile()" value="Upload" />
+            <div id="tuwenProgressNumber"></div>
+        </div>
+    </div>
+</section>
+
+<% for (var i=0;i< menuTittle.length;i++){ %>
+    <% if (menuTittle[i] != "") { %>
+<section>
+    <div class="menu-form">
+        <div class="meun-info">
+            <span class="menu-name">菜单</span>
+            <div class="menu-opra">
+                <a href="javascript:void(0)" class="menu-del">删除菜单</a>
+                <a href="javascript:void(0)" class="menu-del add-submenu">添加子菜单</a>
+            </div>
+        </div>
+        <div class="menu-con" style="display: inline-block">
+            <div class="menu-name-con">
+                <label>菜单名称</label>
+                <div class="input-tip">
+                    <span>
+                        <!--主菜单标题-->
+                        <input type="text" class="con" value="<%= menuTittle[i][0]%>">
+                    </span>
+                    <p>文字不超过4个汉字或8个字母</p>
+                </div>
+            </div>
+
+            <% if (menuTittle[i].length == 1) { %>
+                <div class="menu-con-board">
+                    <div class="menu-reply-type" >
+                        <label>菜单内容</label>
+                        <div class="reply-type">
+                            <label><input type="radio" name="menu-type<%= i+1 %>" checked>发送消息</label>
+                            <label><input type="radio" name="menu-type<%= i+1 %>">跳转网页</label>
+                            <label><input type="radio" name="menu-type<%= i+1 %>">跳小程序</label>
+                        </div>
+                    </div>
+                    <% if (replyCon[i][0] && replyCon[i][0].img) {%>
+                    <div class="menu-reply-con">
+                        <div class="reply-type-con">
+                            <nav>
+                                <a href="javascript:void(0)" class="tuwen-reply">
+                                    <i class="tuwen-img tuwen-img-click">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                    <span>图文信息</span>
+                                </a>
+                                <a href="javascript:void(0)" class="wenzi-reply">
+                                    <i class="wenzi-img">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                    <span>文字(不超30字)</span>
+                                </a>
+                                <a href="javascript:void(0)" class="tupian-reply">
+                                    <i class="tupian-img">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                    <span>图片</span>
+                                </a>
+                            </nav>
+                        </div>
+
+                        <div class="tuwen-con" style="display: inline-block">
+                            <div class="tuwen-con-tittle">
+                                <label>标题：<input type="text" class="tuwen-tittle-text"  <% if (replyCon[i][0].tittle) {%>value="<%= replyCon[i][0].tittle %>"<% } %> ></label>
+                            </div>
+                            <div class="tuwen-con-img">
+                                <label>图片：
+                                    <div class="tuwen-img-select" style="display: none">
+                                        <a href="javascript:void (0)">从素材库中选择</a><br>
+                                    </div>
+                                </label>
+                                <div class="tuwen-picture">
+                                    <img class="tuwen-preview" src="<%= replyCon[i][0].img %>" alt="" name="tuwen-pic" style="width: 100px;" />
+                                    <a href="javascript:void (0)" class="tuwen-delete">删除</a>
+                                </div>
+                            </div>
+                            <div class="tuwen-con-summary-has-img">
+                                <label><span>简介：</span><textarea cols="23" rows="4"><%= replyCon[i][0].des %></textarea></label>
+                            </div>
+                            <div class="tuwen-con-url-has-img">
+                                <label>url：<input type="text" <% if (replyCon[i][0].url){%>value="<%= replyCon[i][0].url%>" <% } %>></label>
+                            </div>
+                        </div>
+                        <div class="wenzi-con" contenteditable="true" style="display:none;">
+
+                        </div>
+                        <div class="tupian-con" style="display: none">
+                            <div class="sucai-div">
+                                <span class="tittle">从素材库中选择</span>
+                            </div>
+                            <div class="tuwen-img-picture" style="display: none;margin-top: 20px;margin-left: 20px">
+                                <img class="tuwen-img-preview" style="width: 100px">
+                                <a href="javascript:void (0)" class="tuwen-img-delete" style="color: #576477">删除</a>
+                            </div>
+                        </div>
+                    </div>
+                    <% }else if (replyCon[i][0] && replyCon[i][0].length < 30){ %>
+                    <div class="menu-reply-con">
+                        <div class="reply-type-con">
+                            <nav>
+                                <a href="javascript:void(0)" class="tuwen-reply">
+                                    <i class="tuwen-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                    <span>图文信息</span>
+                                </a>
+                                <a href="javascript:void(0)" class="wenzi-reply">
+                                    <i class="wenzi-img wenzi-img-click">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                    <span>文字(不超30字)</span>
+                                </a>
+                                <a href="javascript:void(0)" class="tupian-reply">
+                                    <i class="tupian-img">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                    <span>图片</span>
+                                </a>
+                            </nav>
+                        </div>
+
+                        <div class="tuwen-con" style="display: none">
+                            <div class="tuwen-con-tittle">
+                                <label>标题：<input type="text" class="tuwen-tittle-text" ></label>
+                            </div>
+                            <div class="tuwen-con-img">
+                                <label>图片：
+                                    <div class="tuwen-img-select">
+                                        <a href="javascript:void (0)">从素材库中选择</a><br>
+                                    </div>
+                                </label>
+                                <div class="tuwen-picture" style="display: none">
+                                    <img class="tuwen-preview" src="" alt="" name="tuwen-pic" style="width: 100px;" />
+                                    <a href="javascript:void (0)" class="tuwen-delete">删除</a>
+                                </div>
+                            </div>
+                            <div class="tuwen-con-summary">
+                                <label><span>简介：</span><textarea cols="23" rows="4"></textarea></label>
+                            </div>
+                            <div class="tuwen-con-url">
+                                <label>url：<input type="text"></label>
+                            </div>
+                        </div>
+                        <div class="wenzi-con" contenteditable="true" style="display:inline-block;">
+                            <%= replyCon[i][0]%>
+                        </div>
+                        <div class="tupian-con" style="display: none">
+                            <div class="sucai-div">
+                                <span class="tittle">从素材库中选择</span>
+                            </div>
+                            <div class="tuwen-img-picture" style="display: none;margin-top: 20px;margin-left: 20px">
+                                <img class="tuwen-img-preview" style="width: 100px">
+                                <a href="javascript:void (0)" class="tuwen-img-delete" style="color: #576477">删除</a>
+                            </div>
+                        </div>
+                    </div>
+                    <% }else if (replyCon[i][0] && replyCon[i][0].length > 30) { %>
+                    <div class="menu-reply-con">
+                        <div class="reply-type-con">
+                            <nav>
+                                <a href="javascript:void(0)" class="tuwen-reply">
+                                    <i class="tuwen-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                    <span>图文信息</span>
+                                </a>
+                                <a href="javascript:void(0)" class="wenzi-reply">
+                                    <i class="wenzi-img">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                    <span>文字(不超30字)</span>
+                                </a>
+                                <a href="javascript:void(0)" class="tupian-reply">
+                                    <i class="tupian-img tupian-img-click">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                    <span>图片</span>
+                                </a>
+                            </nav>
+                        </div>
+
+                        <div class="tuwen-con" style="display: none">
+                            <div class="tuwen-con-tittle">
+                                <label>标题：<input type="text" class="tuwen-tittle-text" ></label>
+                            </div>
+                            <div class="tuwen-con-img">
+                                <label>图片：
+                                    <div class="tuwen-img-select">
+                                        <a href="javascript:void (0)">从素材库中选择</a><br>
+                                    </div>
+                                </label>
+                                <div class="tuwen-picture" style="display: none">
+                                    <img class="tuwen-preview" src="" alt="" name="tuwen-pic" style="width: 100px;" />
+                                    <a href="javascript:void (0)" class="tuwen-delete">删除</a>
+                                </div>
+                            </div>
+                            <div class="tuwen-con-summary">
+                                <label><span>简介：</span><textarea cols="23" rows="4"></textarea></label>
+                            </div>
+                            <div class="tuwen-con-url">
+                                <label>url：<input type="text"></label>
+                            </div>
+                        </div>
+                        <div class="wenzi-con" contenteditable="true" style="display:none;">
+
+                        </div>
+                        <div class="tupian-con" style="display: inline-block">
+                            <div class="sucai-div" style="display: none">
+                                <span class="tittle">从素材库中选择</span>
+                            </div>
+                            <div class="tuwen-img-picture" style="display: inline-block;margin-top: 20px;margin-left: 20px">
+                                <img class="tuwen-img-preview" style="width: 100px" src="<%= replyCon[i][0]%>">
+                                <a href="javascript:void (0)" class="tuwen-img-delete" style="color: #576477">删除</a>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            <% }else { %>
+                <div class='add-tipe'>已添加子菜单，仅可设置菜单名称。</div>
+                <div class="menu-con-board" style="display: none">
+                    <div class="menu-reply-type" >
+                        <label>菜单内容</label>
+                        <div class="reply-type">
+                            <label><input type="radio" name="menu-type<%= i+1 %>" checked>发送消息</label>
+                            <label><input type="radio" name="menu-type<%= i+1 %>">跳转网页</label>
+                            <label><input type="radio" name="menu-type<%= i+1 %>">跳小程序</label>
+                        </div>
+                    </div>
+                    <div class="menu-reply-con">
+                        <div class="reply-type-con">
+                            <nav>
+                                <a href="javascript:void(0)" class="tuwen-reply">
+                                    <i class="tuwen-img tuwen-img-click">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                    <span>图文信息</span>
+                                </a>
+                                <a href="javascript:void(0)" class="wenzi-reply">
+                                    <i class="wenzi-img">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                    <span>文字(不超过30字)</span>
+                                </a>
+                                <a href="javascript:void(0)" class="tupian-reply">
+                                    <i class="tupian-img">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                    <span>图片</span>
+                                </a>
+                            </nav>
+                        </div>
+                        <div class="tuwen-con" style="display: inline-block">
+                            <div class="tuwen-con-tittle">
+                                <label>标题：<input type="text" class="tuwen-tittle-text"></label>
+                            </div>
+                            <div class="tuwen-con-img">
+                                <label>图片：
+                                    <div class="tuwen-img-select">
+                                        <a href="javascript:void (0)">从素材库中选择</a><br>
+                                    </div>
+                                </label>
+                                <div class="tuwen-picture" style="display: none">
+                                    <img class="tuwen-preview" src="" alt="" name="tuwen-pic" style="width: 100px;" />
+                                    <a href="javascript:void (0)" class="tuwen-delete">删除</a>
+                                </div>
+                            </div>
+                            <div class="tuwen-con-summary">
+                                <label><span>简介：</span><textarea cols="23" rows="4"></textarea></label>
+                            </div>
+                            <div class="tuwen-con-url">
+                                <label>url：<input type="text"></label>
+                            </div>
+                        </div>
+                        <div class="wenzi-con" contenteditable="true" style="display:none;">
+
+                        </div>
+                        <div class="tupian-con" style="display: none">
+                            <div class="sucai-div">
+                                <span class="tittle">从素材库中选择</span>
+                            </div>
+                            <div class="tuwen-img-picture" style="display: none;margin-top: 20px;margin-left: 20px">
+                                <img class="tuwen-img-preview" style="width: 100px">
+                                <a href="javascript:void (0)" class="tuwen-img-delete" style="color: #576477">删除</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <% for (var c=0;c<menuTittle[i].length - 1;c++) { %>
+                    <div class="menu-con submenu-con" style="display: inline-block">
+                        <div class="menu-name-con">
+                            <label>子菜单名称</label>
+                            <div class="input-tip">
+                                <span>
+                                    <input type="text" class="con" value="<%= menuTittle[i][c+1] %>">
+                                </span>
+                                <p>文字不超过4个汉字或8个字母</p>
+                            </div>
+                        </div>
+                        <div class="menu-con-board">
+                            <div class="menu-reply-type" >
+                                <label>子菜单内容</label>
+                                <div class="reply-type">
+                                    <label>
+                                        <input type="radio" name="sub1-menu-type<%= i*10+c %>" checked>发送消息
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="sub1-menu-type<%= i*10+c %>">跳转网页
+                                    </label>
+                                    <label><input type="radio" name="sub1-menu-type<%= i*10+c %>">跳小程序
+                                    </label>
+                                </div>
+                            </div>
+                            <% if (replyCon[i][c].img) {%>
+                            <div class="menu-reply-con">
+                                <div class="reply-type-con">
+                                    <nav>
+                                        <a href="javascript:void(0)" class="tuwen-reply">
+                                            <i class="tuwen-img tuwen-img-click">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                            <span>图文信息</span>
+                                        </a>
+                                        <a href="javascript:void(0)" class="wenzi-reply">
+                                            <i class="wenzi-img">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                            <span>文字(不超30字)</span>
+                                        </a>
+                                        <a href="javascript:void(0)" class="tupian-reply">
+                                            <i class="tupian-img">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                            <span>图片</span>
+                                        </a>
+                                    </nav>
+                                </div>
+                                <div class="tuwen-con" style="display: inline-block">
+                                    <div class="tuwen-con-tittle">
+                                        <label>标题：<input type="text" class="tuwen-tittle-text" <% if (replyCon[i][c].tittle) {%>value="<%= replyCon[i][c].tittle %>"<% } %> ></label>
+                                    </div>
+                                    <div class="tuwen-con-img">
+                                        <label>图片：
+                                            <div class="tuwen-img-select" style="display: none">
+                                                <a href="javascript:void (0)">从素材库中选择</a><br>
+                                            </div>
+                                        </label>
+                                        <div class="tuwen-picture" style="display: inline-block">
+                                            <img class="tuwen-preview" src="<%= replyCon[i][c].img %>" alt="" name="tuwen-pic" style="width: 100px;" />
+                                            <a href="javascript:void (0)" class="tuwen-delete">删除</a>
+                                        </div>
+                                    </div>
+                                    <div class="tuwen-con-summary-has-img">
+                                        <label>
+                                            <span>简介：</span>
+                                            <textarea cols="23" rows="4"><%= replyCon[i][c].des %></textarea>
+                                        </label>
+                                    </div>
+                                    <div class="tuwen-con-url-has-img">
+                                        <label>url：<input type="text" <% if (replyCon[i][c].url){%>value="<%= replyCon[i][c].url%>" <% } %>></label>
+                                    </div>
+                                </div>
+                                <div class="wenzi-con" contenteditable="true" style="display:none;">
+
+                                </div>
+                                <div class="tupian-con" style="display: none">
+                                    <div class="sucai-div">
+                                        <span class="tittle">从素材库中选择</span>
+                                    </div>
+                                    <div class="tuwen-img-picture" style="display: none;margin-top: 20px;margin-left: 20px">
+                                        <img class="tuwen-img-preview" style="width: 100px">
+                                        <a href="javascript:void (0)" class="tuwen-img-delete" style="color: #576477">删除</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }else if (replyCon[i][c].length <= 30) {%>
+                            <div class="menu-reply-con">
+                                <div class="reply-type-con">
+                                    <nav>
+                                        <a href="javascript:void(0)" class="tuwen-reply">
+                                            <i class="tuwen-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                            <span>图文信息</span>
+                                        </a>
+                                        <a href="javascript:void(0)" class="wenzi-reply">
+                                            <i class="wenzi-img wenzi-img-click">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                            <span>文字(不超30字)</span>
+                                        </a>
+                                        <a href="javascript:void(0)" class="tupian-reply">
+                                            <i class="tupian-img">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                            <span>图片</span>
+                                        </a>
+                                    </nav>
+                                </div>
+
+                                <div class="tuwen-con" style="display: none">
+                                    <div class="tuwen-con-tittle">
+                                        <label>标题：<input type="text" class="tuwen-tittle-text" ></label>
+                                    </div>
+                                    <div class="tuwen-con-img">
+                                        <label>图片：
+                                            <div class="tuwen-img-select">
+                                                <a href="javascript:void (0)">从素材库中选择</a><br>
+                                            </div>
+                                        </label>
+                                        <div class="tuwen-picture" style="display: none">
+                                            <img class="tuwen-preview" src="" alt="" name="tuwen-pic" style="width: 100px;" />
+                                            <a href="javascript:void (0)" class="tuwen-delete">删除</a>
+                                        </div>
+                                    </div>
+                                    <div class="tuwen-con-summary">
+                                        <label><span>简介：</span><textarea cols="23" rows="4"></textarea></label>
+                                    </div>
+                                    <div class="tuwen-con-url">
+                                        <label>url：<input type="text"></label>
+                                    </div>
+                                </div>
+                                <div class="wenzi-con" contenteditable="true" style="display:inline-block;">
+                                    <%= replyCon[i][c]%>
+                                </div>
+                                <div class="tupian-con" style="display: none">
+                                    <div class="sucai-div">
+                                        <span class="tittle">从素材库中选择</span>
+                                    </div>
+                                    <div class="tuwen-img-picture" style="display: none;margin-top: 20px;margin-left: 20px">
+                                        <img class="tuwen-img-preview" style="width: 100px">
+                                        <a href="javascript:void (0)" class="tuwen-img-delete" style="color: #576477">删除</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }else if (replyCon[i][c].length > 30) {%>
+                            <div class="menu-reply-con">
+                                <div class="reply-type-con">
+                                    <nav>
+                                        <a href="javascript:void(0)" class="tuwen-reply">
+                                            <i class="tuwen-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                            <span>图文信息</span>
+                                        </a>
+                                        <a href="javascript:void(0)" class="wenzi-reply">
+                                            <i class="wenzi-img">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                            <span>文字(不超30字)</span>
+                                        </a>
+                                        <a href="javascript:void(0)" class="tupian-reply">
+                                            <i class="tupian-img tupian-img-click">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                            <span>图片</span>
+                                        </a>
+                                    </nav>
+                                </div>
+
+                                <div class="tuwen-con" style="display: none">
+                                    <div class="tuwen-con-tittle">
+                                        <label>标题：<input type="text" class="tuwen-tittle-text" ></label>
+                                    </div>
+                                    <div class="tuwen-con-img">
+                                        <label>图片：
+                                            <div class="tuwen-img-select">
+                                                <a href="javascript:void (0)">从素材库中选择</a><br>
+                                            </div>
+                                        </label>
+                                        <div class="tuwen-picture" style="display: none">
+                                            <img class="tuwen-preview" src="" alt="" name="tuwen-pic" style="width: 100px;" />
+                                            <a href="javascript:void (0)" class="tuwen-delete">删除</a>
+                                        </div>
+                                    </div>
+                                    <div class="tuwen-con-summary">
+                                        <label><span>简介：</span><textarea cols="23" rows="4"></textarea></label>
+                                    </div>
+                                    <div class="tuwen-con-url">
+                                        <label>url：<input type="text"></label>
+                                    </div>
+                                </div>
+                                <div class="wenzi-con" contenteditable="true" style="display:none;">
+
+                                </div>
+                                <div class="tupian-con" style="display: inline-block">
+                                    <div class="sucai-div" style="display: none">
+                                        <span class="tittle">从素材库中选择</span>
+                                    </div>
+                                    <div class="tuwen-img-picture" style="display: inline-block;margin-top: 20px;margin-left: 20px">
+                                        <img class="tuwen-img-preview" style="width: 100px" src="<%= replyCon[i][c]%>">
+                                        <a href="javascript:void (0)" class="tuwen-img-delete" style="color: #576477">删除</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+                        <a href="javascript:void(0)" class="del-submenu">删除子菜单</a>
+                    </div>
+                <% } %>
+            <% } %>
+            <div class="menu-button">
+                <button class="menu-save">保存</button>
+            </div>
+        </div>
+    </div>
+</section>
+    <% } %>
+<% } %>
+
+<script src="/js/jquery-3.2.0%20.js"></script>
+<script src="/js/menu/menu.js"></script>
+<script src="/js/menu/con-borad.js"></script>
+<script src="/js/menu/add-menu.js"></script>
+<script src="/js/menu/tuwen-upload-img.js"></script>
+<script src="/js/menu/imgBroad.js"></script>
+</body>
+</html>

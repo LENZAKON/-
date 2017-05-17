@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自动回复页面</title>
+    <link href="/style/index3.css" type="text/css" rel="stylesheet">
+    <link href="/style/style.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div class="menbang" style="display: none">
+    <div class="dialog">
+        <div class="dialog-header">
+            <p>添加关键字</p>
+            <a href="javascript:void (0)" class="close-menbang">×</a>
+        </div>
+        <div class="dialog-body">
+            <div class="dialog-b-con">
+                <div class="dialog-b-input">
+                    <div class="dialog-wenzi" contenteditable="true">
+
+                    </div>
+                    <div class="dialog-express">
+                        <a href="javascript:void (0)">
+                            <i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                        </a>
+                        <span>还可以输入<i>30 </i> 个字</span>
+                    </div>
+                </div>
+                <div class="dialog-b-tit">
+
+                </div>
+            </div>
+        </div>
+        <div class="dialog-footer">
+            <div class="btn">
+                <button class="save" id="save-wenzi" style="width: 100px">确定</button>
+                <button class="res-can">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="menbang" style="display: none">
+    <div class="dialog">
+        <div class="dialog-header">
+            <p>添加回复文字</p>
+            <a href="javascript:void (0)" class="close-menbang">×</a>
+        </div>
+        <div class="dialog-body">
+            <div class="dialog-b-con">
+                <div class="dialog-b-input">
+                    <div class="dialog-wenzi" contenteditable="true">
+
+                    </div>
+                    <div class="dialog-express">
+                        <a href="javascript:void (0)">
+                            <i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                        </a>
+                        <span>还可以输入<i>30 </i> 个字</span>
+                    </div>
+                </div>
+                <div class="dialog-b-tit">
+
+                </div>
+            </div>
+        </div>
+        <div class="dialog-footer">
+            <div class="btn">
+                <button class="save-wenzi" style="width: 100px">确定</button>
+                <button class="res-can">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="menbang img-menbang" style="display: none">
+    <div class="window">
+        <div class="window-top">
+            <p>选择图片</p>
+            <a href="javascript:void (0)" class="close-menbang">×</a>
+        </div>
+        <div class="window-left">
+            <div class="w-l-list">
+                <div class="list">
+                    <p>全部图片</p>
+                    <em>(<span>0</span>)</em>
+                </div>
+                <div class="list">
+                    <p>未分组</p>
+                    <em>(<span>0</span>)</em>
+                </div>
+                <div class="list">
+                    <p>文章配图</p>
+                    <em>(<span>0</span>)</em>
+                </div>
+            </div>
+        </div>
+        <div class="window-right">
+            <img id="pic1" alt="" name="pic" style="margin-left: 0px; margin-top:35px; width: 0px" />
+            <% if(sucaikuImgUrl) { %>
+                <% for (var i=0;i<sucaikuImgUrl.length;i++) { %>
+
+                <img src="<%= sucaikuImgUrl[i] %>" class="window-right-img">
+
+                <% } %>
+
+            <% } %>
+
+        </div>
+        <div class="window-bot">
+            <div class="w-b-result">
+                <p class="tit-res">
+                    已选<span class="has-cho-num">0</span>个，可选1个
+                </p>
+                <div class="caozuo">
+                    <button class="res-que">确定</button>
+                    <button class="res-can img-res-can">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<header>
+    <nav>
+        <a class="type" href="index2.ejs">被添加自动回复</a>
+        <a class="type select" href="javascript:void (0)">关键词自动回复</a>
+        <a class="type" href="index3">自定义菜单</a>
+    </nav>
+</header>
+
+<div class="add-rule">
+    <span>＋添加规则</span>
+</div>
+
+<% var minID = 1000 %>
+<% for(var g=0;g<totalID.length;g++) { %>
+    <% minID = Math.max(minID,totalID[g]); %>
+<% } %>
+
+<div class="rule" id=<%= minID+1 %>>
+    <div class="rule-item">
+        <div class="new-roule">
+            <div class="info">
+                <span>新规则</span>
+            </div>
+            <div class="open">
+                ▲
+            </div>
+        </div>
+    </div>
+    <div class="total-res" style="display: none;">
+        <div class="total-con">
+            <div>
+                <div style="display: inline-block;float: left">关键词</div>
+                <div class="key-total-word">
+
+                </div>
+            </div>
+
+            <div class="total-reply">
+                <span>回复</span>
+                <div class="reply-info">
+                    <em class="total-num">0</em>条（ <em class="wenzi-num">0</em>条文字， <em class="tupian-num">0</em>条图片， <em class="yuyin-num">0</em>条语音， <em class="shiping-num">0</em>条视频， <em class="tuwen-num">0</em>条图文）
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="total-rule" style="display: inline-block">
+        <div class="rule-name">
+            <div class="rule-name-con">
+                <label>规则名</label>
+                <div class="rlue-con">
+                    <span class="con-box">
+                        <input type="text" class="con">
+                    </span>
+                    <p>规则名最多60个字</p>
+                </div>
+            </div>
+        </div>
+        <div class="key-rule">
+            <div>
+                <div class="key-info">关键字</div>
+                <div class="add-key">
+                    <a href="javascript:void (0)" class="add-key-item">添加关键字</a>
+                </div>
+            </div>
+        </div>
+        <div class= "rule-answer">
+            <div class="ans-tit">
+                <div class="ans-info">
+                    <span>回复</span>
+                </div>
+            </div>
+            <div class="ans-con">
+                <label><input type="checkbox">回复全部</label>
+            </div>
+        </div>
+        <div class="ans-type">
+            <nav>
+                <a href="javascript:void (0)" id="change-wenzi" class="wenzi-change">
+                    <i class="wenzi-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                    <span>文字</span>
+                </a>
+                <a href="javascript:void (0)" id="change-img" class="img-change">
+                    <i class="tupian-img">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                    <span>图片</span>
+                </a>
+                <a href="#">
+                    <i class="yuyin-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                    <span>语音</span>
+                </a>
+                <a href="javascript:void (0)">
+                    <i class="shiping-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                    <span>视频</span>
+                </a>
+                <a href="javascript:void (0)">
+                    <i class="tuwen-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                    <span>图文</span>
+                </a>
+            </nav>
+        </div>
+        <div class="rule-res">
+            <p>
+                文字（<em class="res-wenzi first-res-wenzi">0</em> ) 、图片（<em class="res-tupian">0</em> ) 、语音（<em class="res-yuyin">0</em> ) 、视频（<em class="res-shipin">0</em> ) 、图文（<em class="res-tuwen">0</em> )
+            </p>
+            <div class="res-save">
+                <button class="save rule-save fist-rule">保存</button>
+                <button class="del">删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% for(var i=0;i<totalID.length;i++) { %>
+<div class='rule' id=<%= totalID[i] %>>
+	<div class='rule-item'>
+		<div class="new-roule">
+			<div class="info">
+                <span>新规则</span>
+            </div>
+            <div class="open">
+                ▲
+            </div>
+		</div>
+	</div>
+	<div class="total-res" style="display: none;">
+        <div class="total-con">
+            <div>
+                <div style="display: inline-block;float: left">关键词</div>
+                <div class="key-total-word">
+                    <%for(var g=0;g<keywords[i].length;g++) {%>
+                        <span style="margin-right: 20px;"><%=keywords[i][g] %></span>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="total-reply">
+                <span>回复</span>
+                <div class="reply-info">
+                    <em class="total-num">1</em>条（ <em class="wenzi-num">1</em>条文字， <em class="tupian-num">1</em>条图片， <em class="yuyin-num">0</em>条语音， <em class="shiping-num">0</em>条视频， <em class="tuwen-num">0</em>条图文）
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="total-rule" style="display: inline-block">
+        <div class="rule-name">
+            <div class="rule-name-con">
+                <label>规则名</label>
+                <div class="rlue-con">
+                    <span class="con-box">
+                        <input type="text" class="con" value=<%= ruleName[i] %>>
+                    </span>
+                    <p>规则名最多60个字</p>
+                </div>
+            </div>
+        </div>
+        <div class="key-rule">
+            <div>
+                <div class="key-info">关键字</div>
+                <div class="add-key">
+                    <a href="javascript:void (0)" class="add-key-item">添加关键字</a>
+                </div>
+            </div>
+        </div>
+        <% for(var j=0;j<keywordsID.length;j++) {%>
+        <% if(keywordsID[i][j] || keywordsID[i][j] == 0) {%>
+                <div class="key-word add-key-word" id=<%= keywordsID[i][j] %>>
+                    <div class="key-word-con"><%= keywords[i][j] %></div>
+                    <div class="key-word-ed">
+                        <a class="match-a">关键字未全匹配</a>
+                        <i class="change-word save-key-change"></i>
+                        <i class="del-word key-del-word"></i>
+                    </div>
+                </div>
+        <% } %>
+        <% } %>
+        <div class= "rule-answer">
+            <div class="ans-tit">
+                <div class="ans-info">
+                    <span>回复</span>
+                </div>
+            </div>
+            <div class="ans-con">
+                <label><input type="checkbox">回复全部</label>
+            </div>
+        </div>
+        <div class="ans-type">
+            <nav>
+                <a href="javascript:void (0)" id="change-wenzi" class="wenzi-change">
+                    <i class="wenzi-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                    <span>文字</span>
+                </a>
+                <a href="javascript:void (0)" id="change-img" class="img-change">
+                    <i class="tupian-img">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                    <span>图片</span>
+                </a>
+                <a href="javascript:void (0)">
+                    <i class="yuyin-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                    <span>语音</span>
+                </a>
+                <a href="javascript:void (0)">
+                    <i class="shiping-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                    <span>视频</span>
+                </a>
+                <a href="javascript:void (0)">
+                    <i class="tuwen-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                    <span>图文</span>
+                </a>
+            </nav>
+        </div>
+
+
+        <% for (var q=0 ;q<replyID.length ;q++) {%>
+            <% if(replyID[i][q] || replyID[i][q] == 0 ) {%>
+                    <% if(reply[i][q].length <= 30) { %>
+                        <div class="key-word wenzi-react-word" id=<%= replyID[i][q] %>>
+                            <div class="key-word-con"><%= reply[i][q] %></div>
+                            <div class="key-word-ed">
+                                <i class="change-word save-reply-change-word"></i>
+                                <i class="del-word wenzi-del-word"></i>
+                            </div>
+                        </div>
+
+                    <% }else { %>
+                        <div class="insert" id=<%= replyID[i][q] %>>
+                            <div class="img-insert">
+                                <img src="<%= reply[i][q] %>" class="img-insert-pic">
+                                <a href="javascript:void (0)" class="img-insert-pic-a save-img">删除</a>
+                            </div>
+                        </div>
+                    <% } %>
+
+            <% } %>
+        <% } %>
+
+        <div class="rule-res">
+            <p>
+                文字（<em class="res-wenzi first-res-wenzi">1</em> ) 、图片（<em class="res-tupian">1</em> ) 、语音（<em class="res-yuyin">0</em> ) 、视频（<em class="res-shipin">0</em> ) 、图文（<em class="res-tuwen">0</em> )
+            </p>
+            <div class="res-save">
+                <button class="save rule-save fist-rule">保存</button>
+                <button class="del">删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+<% } %>
+
+<script src="/js/jquery-3.2.0%20.js"></script>
+<script src="/js/index3/replyImgBroad.js"></script>
+<script src="/js/index3/rule.js"></script>
+<script src="/js/index3/keyWordBroad.js"></script>
+<script src="/js/index3/keyWordRow.js"></script>
+<script src="/js/index3/Img.js"></script>
+<script src="/js/index3/replyWordBroad.js"></script>
+<script src="/js/index3/replyWordRow.js"></script>
+<script src="/js/index3/main.js"></script>

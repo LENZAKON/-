@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自动回复页面</title>
+    <link href="/style/style.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<div class="menbang" style="display: none">
+    <div class="window">
+        <div class="window-top">
+            <p>选择图片</p>
+            <a href="#" class="close-menbang">×</a>
+        </div>
+        <div class="window-left">
+            <div class="w-l-list">
+                <div class="list">
+                    <p>全部图片</p>
+                    <em>(<span>0</span>)</em>
+                </div>
+                <div class="list">
+                    <p>未分组</p>
+                    <em>(<span>0</span>)</em>
+                </div>
+                <div class="list">
+                    <p>文章配图</p>
+                    <em>(<span>0</span>)</em>
+                </div>
+            </div>
+        </div>
+        <div class="window-right">
+            <img id="pic1" alt="" name="pic" style="margin-left: 0px; margin-top:35px; width: 0px" />
+
+            <% if(sucaikuImgUrl) { %>
+            <% for (var i=0;i<sucaikuImgUrl.length;i++) { %>
+
+            <img src="<%= sucaikuImgUrl[i] %>" class="window-right-img">
+
+            <% } %>
+
+            <% } %>
+
+        </div>
+        <div class="window-bot">
+            <div class="w-b-result">
+                <p class="tit-res">
+                    已选<span class="has-cho-num">0</span>个，可选1个
+                </p>
+                <div class="caozuo">
+                    <button class="res-que">确定</button>
+                    <button class="res-can">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<header>
+    <nav>
+        <a class="type select" href="javascript:void (0)">被添加自动回复</a>
+        <a class="type" href="index">关键词自动回复</a>
+        <a class="type" href="index3">自定义菜单</a>
+    </nav>
+</header>
+<div class="out-all">
+    <div class="in-top">
+        <nav>
+            <a href="#" id="change-wenzi">
+                <i class="wenzi-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                <span>文字</span>
+            </a>
+            <a href="#" id="change-img">
+                <i class="tupian-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                <span>图片</span>
+            </a>
+            <a href="#">
+                <i class="yuyin-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                <span>语音</span>
+            </a>
+            <a href="#">
+                <i class="shiping-img">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                <span>视频</span>
+            </a>
+        </nav>
+    </div>
+    <div class="out">
+        <% if(showImgURL) { %>
+            <div id="picture" style="display: none">
+                <img id="preview" src="<%= showImgURL %>" alt="" name="pic" style="display: inline-block;margin-left: 20px;margin-top: 20px;width: 150px;" />
+                <a href="#" id="delete">删除</a>
+            </div>
+            <div class="pass-div" style="display: none;">
+                <div class="sucai-div">
+                    <span class="tittle">从素材库中选择</span>
+                </div>
+                <div class="sucai-div" style="float: right">
+                    <span class="tittle" style="margin-left: 140px;margin-top: 40px">上传图片
+                        <form id="form1" enctype="multipart/form-data" method="post" action="http://192.168.1.109:3030/upload">
+                            <div class="row">
+                              <!--<label for="fileToUpload">Select a File to Upload</label><br />-->
+                              <input type="file" name="fileToUpload" id="fileToUpload" onchange="fileSelected();"/>
+                            </div>
+                            <div id="fileName"></div>
+                            <div id="fileSize"></div>
+                            <div id="fileType"></div>
+                            <div class="row">
+                              <input type="button" onclick="uploadFile()" value="Upload" />
+                            </div>
+                            <div id="progressNumber"></div>
+                      </form>
+                    </span>
+                </div>
+            </div>
+       <% }else { %>
+
+        <div id="picture" style="display: none">
+            <img id="preview" src="" alt="" name="pic" style="display: inline-block;margin-left: 20px;margin-top: 20px;width: 150px;" />
+            <a href="#" id="delete">删除</a>
+        </div>
+        <div class="pass-div" style="display: none;">
+            <div class="sucai-div">
+                <span class="tittle">从素材库中选择</span>
+            </div>
+            <div class="sucai-div" style="float: right">
+                <span class="tittle" style="margin-left: 140px;margin-top: 40px">上传图片
+                    <form id="form1" enctype="multipart/form-data" method="post" action="http://192.168.1.109:3030/upload">
+                        <div class="row">
+                          <!--<label for="fileToUpload">Select a File to Upload</label><br />-->
+                          <input type="file" name="fileToUpload" id="fileToUpload" onchange="fileSelected();"/>
+                        </div>
+                        <div id="fileName"></div>
+                        <div id="fileSize"></div>
+                        <div id="fileType"></div>
+                        <div class="row">
+                          <input type="button" onclick="uploadFile()" value="Upload" />
+                        </div>
+                        <div id="progressNumber"></div>
+                  </form>
+                </span>
+            </div>
+        </div>
+
+        <% } %>
+
+        <div class="out-write" contenteditable="true" ><%= addedReply %></div>
+    </div>
+    <div class="in-bot">
+        <a href="#">
+            <i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+        </a>
+        <span>还可以输入<i>600 </i> 个字</span>
+    </div>
+</div>
+<footer>
+    <button class="save">保存</button>
+    <button class="del">删除回复</button>
+</footer>
+
+<script src="/js/jquery-3.2.0%20.js"></script>
+<script src="/js/img.js"></script>
+<script src="/js/sucaiku.js"></script>
+<script src="/js/upload-img.js"></script>
+<script src="/js/word.js"></script>
+<script src="/js/save.js"></script>
+<script src="/js/delete.js"></script>
+<script>
+
+    //点击图片
+    var img = new img();
+    img.init1();
+    img.deleteImg();
+
+    //素材库
+    var storehouse = new materialStore();
+    storehouse.state();
+    storehouse.select();
+    storehouse.save();
+
+    //点击文字
+    var word = new word();
+    word.init();
+    word.wordNum();
+
+    //保存按钮
+    var save = new save();
+    save.saveWP1();
+
+    //点击删除
+    var saveDelete = new saveDelete();
+    saveDelete.delet();
+
+</script>
+</body>
+</html>
