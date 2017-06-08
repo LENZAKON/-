@@ -270,7 +270,6 @@ Menu.prototype = {
                             var tuwenUrl = mainMenu.getElementsByClassName("tuwen-con-url-has-img")[0].getElementsByTagName("input")[0].value;
 
 
-
                             $.ajax({
                                 url:"",
                                 type:"post",
